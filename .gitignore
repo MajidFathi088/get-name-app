@@ -1,0 +1,8 @@
+/.venv/
+.idea
+bonus
+exercises
+journal
+csv-module.py
+f-csv.csv
+glob-module.py
