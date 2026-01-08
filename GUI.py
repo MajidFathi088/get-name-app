@@ -8,8 +8,8 @@ clock = sg.Text("", key='clock')
 lable = sg.Text("Enter your name: ")
 input_box = sg.InputText(tooltip="enter your name: ", key="name", size=(20, 1))
 list_box = sg.Listbox(functions.get_names(), key="listbox", enable_events=True, size=(20, 10))
-edit_button = sg.Button("Edit")
-add_button = sg.Button("Add")
+edit_button = sg.Button("Edit", size=(5, 1))
+add_button = sg.Button("Add", size=(8, 1))
 delete_button = sg.Button("Delete")
 exit_button = sg.Button("Exit")
 
@@ -17,7 +17,7 @@ window = sg.Window("The App",
                    layout=[[[clock],
                             [lable],
                             [input_box, add_button],
-                            [list_box, edit_button, delete_button],
+                            [list_box, sg.Column([[edit_button], [delete_button]])],
                             [exit_button]]],
                    font=('Helvetica', 12),)
 
