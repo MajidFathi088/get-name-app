@@ -1,6 +1,11 @@
 import functions
 import FreeSimpleGUI as sg
 import time
+import os
+
+if not os.path.exists('names.txt'):
+    with open('names.txt', 'w') as f:
+        pass
 
 sg.theme('DarkGrey')
 
@@ -32,9 +37,10 @@ while True:
             new_name = values["name"].strip()
             if new_name:
                 names = functions.get_names()
-                names.append(new_name + "\n")
+                names.append(new_name)
                 functions.write_names(names)
-                window["listbox"].update(values=names)
+                clean_list = [name.strip() for name in names]
+                window["listbox"].update(values=clean_list)
                 window["name"].update("")
             else:
                 sg.popup("Name cannot be empty", font=('Helvetica', 12))
@@ -42,13 +48,15 @@ while True:
         case "Edit":
             try:
                 name_to_edit = values['listbox'][0]
-                new_name = values['name'] + '\n'
+                new_name = values['name'].strip()
 
                 names = functions.get_names()
                 index = names.index(name_to_edit)
                 names[index] = new_name
                 functions.write_names(names)
-                window["listbox"].update(values=names)
+                clean_list = [name.strip() for name in names]
+                window["listbox"].update(values=clean_list)
+                window["name"].update("")
             except IndexError:
                 sg.popup("Please select a name.", font=('Helvetica', 12))
 
@@ -67,7 +75,10 @@ while True:
             break
 
         case "listbox":
-            window["name"].update(value=values["listbox"][0])
+            try:
+                window["name"].update(value=values["listbox"][0])
+            except IndexError:
+                sg.popup("List is empty.", font=('Helvetica', 12))
         case sg.WINDOW_CLOSED:
             break
 
